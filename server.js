@@ -7,10 +7,11 @@ const app = require("./app");
 // ==============================Підключення mongoose====
 // tj4Z6xFsH7u9ensa
 const mongoose = require("mongoose");
-const { DB_HOST } = require("./config");
+// const { DB_HOST } = require("./config");
+const { DB_HOST } = process.env;
 
 mongoose.set("strictQuery", true);
-
+console.log(process.env.DB_HOST);
 mongoose
   .connect(DB_HOST)
   .then(() => {
