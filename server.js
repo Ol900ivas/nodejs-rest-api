@@ -7,8 +7,8 @@ const app = require("./app");
 // ==============================Підключення mongoose====
 // tj4Z6xFsH7u9ensa
 const mongoose = require("mongoose");
-const DB_HOST =
-  "mongodb+srv://Olga:tj4Z6xFsH7u9ensa@cluster0.yjv8jva.mongodb.net/db-contacts?retryWrites=true&w=majority";
+const { DB_HOST } = require("./config");
+
 mongoose.set("strictQuery", true);
 
 mongoose
