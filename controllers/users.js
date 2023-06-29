@@ -1,10 +1,12 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const gravatar = require("gravatar");
-const { User } = require("../models/user");
-const { HttpError, ctrlWrapper } = require("../helpers");
 const path = require("path");
 const fs = require("fs/promises");
+const jimp = require("jimp");
+const { User } = require("../models/user");
+const { HttpError, ctrlWrapper } = require("../helpers");
+
 const { SECRET_KEY } = process.env;
 const avatarsDir = path.join(__dirname, "../", "public", "avatars");
 
@@ -84,6 +86,10 @@ const updateSubscription = async (req, res) => {
 const updateAvatar = async (req, res) => {
   const { _id } = req.user;
   const { path: tempDir, originalname } = req.file;
+  // зміна розміру зображення за допомогою jimp
+  await jimp.read(tempDir).then((image) => {
+    image.resize(250, 250).blur(5).write(tempDir);
+  });
   // перейменовуємо файл
   const filename = `${_id}_${originalname}`;
   // новий шлях
