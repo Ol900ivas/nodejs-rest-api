@@ -11,7 +11,7 @@ describe("test login controller", () => {
     mongoose.connect(DB_HOST);
   });
 
-  // Від'єднуємося від бази даних та вимикаємо сервер після виконання всіх тестів
+  // Від'єднуємося від бази даних та зупиняємо сервер після виконання всіх тестів
   afterAll(() => {
     mongoose.disconnect();
     // app.close();
