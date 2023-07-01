@@ -85,17 +85,18 @@ const updateSubscription = async (req, res) => {
 
 const updateAvatar = async (req, res) => {
   const { _id } = req.user;
-  const { path: tempDir, originalname } = req.file;
+  const { path: tempUpload, originalname } = req.file;
   // зміна розміру зображення за допомогою jimp
-  await jimp.read(tempDir).then((image) => {
-    image.resize(250, 250).blur(5).write(tempDir);
+  await jimp.read(tempUpload).then((image) => {
+    image.cover(250, 250).write(tempUpload);
   });
   // перейменовуємо файл
   const filename = `${_id}_${originalname}`;
   // новий шлях
   const resultUpload = path.join(avatarsDir, filename);
   // переносимо файл з тимчасової папки в public/avatars
-  await fs.rename(tempDir, resultUpload);
+
+  await fs.rename(tempUpload, resultUpload);
   // записуємо шлях до файлу в базу в поле avatarURL
   const avatarURL = path.join("avatars", filename);
   await User.findByIdAndUpdate(_id, { avatarURL });
