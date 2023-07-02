@@ -5,16 +5,17 @@ const app = require("../../app");
 const { DB_HOST, PORT = 3000 } = process.env;
 
 describe("test login controller", () => {
+  let server;
   // Перед усіма тестами запускаємо сервер та під'єднуємося до бази даних
   beforeAll(() => {
-    app.listen(PORT);
+    server = app.listen(PORT);
     mongoose.connect(DB_HOST);
   });
 
   // Від'єднуємося від бази даних та зупиняємо сервер після виконання всіх тестів
   afterAll(() => {
     mongoose.disconnect();
-    // app.close();
+    server.close();
   });
 
   test("login return status 200, token, user", async () => {
